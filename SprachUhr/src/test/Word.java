@@ -1,29 +1,26 @@
 package test;
 
-public class Word {
+public class Word implements HasCharPositions {
 
-	private int[] charPositions;
-	private int row;
+	private Integer[] charPositions;
 
 	Word(int row, int... charPositions) {
-		this.row = row;
-		this.charPositions = charPositions;
+		int y = 0;
+		this.charPositions = new Integer[charPositions.length];
+		for (int i : charPositions) {
+			this.charPositions[y] = i + row * Clock.COLUMNS;
+			y++;
+		}
 	}
 
-	public int[] getCharPositions() {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see test.HasCharPositions#getAbsoluteCharPositions()
+	 */
+	@Override
+	public Integer[] getAbsoluteCharPositions() {
 		return charPositions;
-	}
-
-	public int getRow() {
-		return row;
-	}
-
-	public void setCharPositions(int[] chars) {
-		this.charPositions = chars;
-	}
-
-	public void setRow(int row) {
-		this.row = row;
 	}
 
 }

@@ -1,5 +1,8 @@
 package test;
 
+import static test.Clock.COLUMNS;
+import static test.Clock.ROWS;
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.GridLayout;
@@ -10,13 +13,12 @@ import javax.swing.border.EmptyBorder;
 
 public class ClockComposite extends JComponent {
 
-	private static final int COLUMNS = 11;
-
-	private static final int ROWS = 10;
-
 	private static final long serialVersionUID = 4229018579689301767L;
 
 	private JLabel[][] characters;
+
+	private static final Color HIGHLIGHT_COLOR = Color.WHITE;
+	private static final Color DEFAULT_COLOR = new Color(50, 50, 50);
 
 	public ClockComposite() {
 		setDoubleBuffered(true);
@@ -40,7 +42,8 @@ public class ClockComposite extends JComponent {
 		for (int row = 0; row < ROWS; row++) {
 			for (int col = 0; col < COLUMNS; col++) {
 				JLabel newLabel = new JLabel(characterArray[row][col] + "");
-				newLabel.setForeground(Color.GRAY);
+				newLabel.setForeground(DEFAULT_COLOR);
+				newLabel.setFont(newLabel.getFont().deriveFont(32.0f));
 				add(newLabel);
 				characters[row][col] = newLabel;
 			}
@@ -50,12 +53,12 @@ public class ClockComposite extends JComponent {
 	public void resetAllChars() {
 		for (JLabel[] labels : characters) {
 			for (JLabel label : labels) {
-				label.setForeground(Color.GRAY);
+				label.setForeground(DEFAULT_COLOR);
 			}
 		}
 	}
 
 	public void setHighlighted(int row, int col) {
-		characters[row][col].setBackground(Color.BLUE);
+		characters[row][col].setForeground(HIGHLIGHT_COLOR);
 	}
 }
