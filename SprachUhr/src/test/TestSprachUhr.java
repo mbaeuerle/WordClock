@@ -2,6 +2,9 @@ package test;
 
 import javax.swing.JFrame;
 
+import clock.Clock;
+import clock.ClockComposite;
+
 public class TestSprachUhr {
 
 	public static void main(String[] args) {
