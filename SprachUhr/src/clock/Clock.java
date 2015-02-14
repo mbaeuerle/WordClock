@@ -50,7 +50,7 @@ public class Clock {
 		hours.put(7, new Word(8, 0, 1, 2, 3, 4, 5));
 		hours.put(8, new Word(7, 7, 8, 9, 10));
 		hours.put(9, new Word(9, 3, 4, 5, 6));
-		hours.put(10, new Word(9, 0, 1, 2, 3, 4));
+		hours.put(10, new Word(9, 0, 1, 2, 3));
 		hours.put(11, new Word(4, 5, 6, 7));
 		hours.put(0, new Word(8, 6, 7, 8, 9, 10));
 	}
@@ -85,7 +85,7 @@ public class Clock {
 			int offset = col % COLUMNS;
 			clock.setHighlighted(row, offset);
 		}
-
+		clock.repaint();
 	}
 
 	public void showCurrentTime() {
@@ -98,30 +98,63 @@ public class Clock {
 				Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("Europe/Berlin"));
 				int hour = cal.get(Calendar.HOUR);
 				int minute = cal.get(Calendar.MINUTE);
-				int shownMinute = (minute / 5) * 5;
-				int shownHour = hour;
-				if (shownMinute > 20) {
-					shownHour++;
-					shownHour = shownHour % 12;
-				}
-				Word hourWord = hours.get(shownHour);
-				HasCharPositions minuteWord = minutes.get(shownMinute);
-				Sentence sentenceToShow = new Sentence(hourWord, minuteWord, keyWordEsIst);
-				if (shownMinute == 0) {
-					sentenceToShow.addWord(keyWordClock);
-				}
-
-				System.out.println("Stunde: " + hour + " Minute: " + minute + " Shown: " + shownMinute);
-				SwingUtilities.invokeLater(new Runnable() {
-
-					@Override
-					public void run() {
-						clock.resetAllChars();
-						showWord(sentenceToShow);
-					}
-				});
+				internalShowTime(hour, minute);
 
 			}
-		}, 0, 1000);
+
+		}, 0, 60 * 1000);
+	}
+
+	int hour = 0;
+	int minute = 0;
+
+	public void testTime() {
+		Timer timer = new Timer(true);
+
+		timer.schedule(new TimerTask() {
+
+			@Override
+			public void run() {
+				internalShowTime(hour, minute);
+
+				minute++;
+				if (minute >= 60) {
+					minute = 0;
+					hour++;
+					hour = hour % 12;
+				}
+			}
+
+		}, 0, 200);
+	}
+
+	private void internalShowTime(int hour, int minute) {
+
+		int shownMinute = ((minute + 2) / 5) * 5;
+		int shownHour = hour;
+		if (shownMinute >= 60) {
+			shownMinute = 0;
+			shownHour++;
+			shownHour = shownHour % 12;
+		} else if (shownMinute > 20) {
+			shownHour++;
+			shownHour = shownHour % 12;
+		}
+		Word hourWord = hours.get(shownHour);
+		HasCharPositions minuteWord = minutes.get(shownMinute);
+		final Sentence sentenceToShow = new Sentence(hourWord, minuteWord, keyWordEsIst);
+		if (shownMinute == 0) {
+			sentenceToShow.addWord(keyWordClock);
+		}
+
+		System.out.println("Stunde: " + hour + " Minute: " + minute + " Shown: " + shownHour + ":" + shownMinute);
+		SwingUtilities.invokeLater(new Runnable() {
+
+			@Override
+			public void run() {
+				clock.resetAllChars();
+				showWord(sentenceToShow);
+			}
+		});
 	}
 }

@@ -9,6 +9,7 @@ import java.awt.GridLayout;
 
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 public class ClockComposite extends JComponent {
@@ -44,6 +45,7 @@ public class ClockComposite extends JComponent {
 				JLabel newLabel = new JLabel(characterArray[row][col] + "");
 				newLabel.setForeground(DEFAULT_COLOR);
 				newLabel.setFont(newLabel.getFont().deriveFont(32.0f));
+				newLabel.setHorizontalAlignment(SwingConstants.CENTER);
 				add(newLabel);
 				characters[row][col] = newLabel;
 			}

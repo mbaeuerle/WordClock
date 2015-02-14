@@ -21,6 +21,7 @@ public class TestSprachUhr {
 		testFrame.setVisible(true);
 
 		clock.showCurrentTime();
+		// clock.testTime();
 	}
 
 }
