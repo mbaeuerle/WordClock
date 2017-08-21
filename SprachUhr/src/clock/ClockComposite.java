@@ -19,7 +19,7 @@ public class ClockComposite extends JComponent {
 	private JLabel[][] characters;
 
 	private static final Color HIGHLIGHT_COLOR = Color.WHITE;
-	private static final Color DEFAULT_COLOR = new Color(20, 20, 20);
+	private static final Color DEFAULT_COLOR = new Color(30, 30, 30);
 
 	public ClockComposite() {
 		setDoubleBuffered(true);
