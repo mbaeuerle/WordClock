@@ -72,7 +72,7 @@ public class Clock {
 		minutes.put(25, new Sentence(fuenf, vor, halb));
 		minutes.put(30, new Sentence(halb));
 		minutes.put(35, new Sentence(fuenf, nach, halb));
-		minutes.put(40, new Sentence(zehn, nach, halb));
+		minutes.put(40, new Sentence(zwanzig, vor));
 		minutes.put(45, new Word(2, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
 		minutes.put(50, new Sentence(zehn, vor));
 		minutes.put(55, new Sentence(fuenf, vor));
@@ -102,7 +102,7 @@ public class Clock {
 
 			}
 
-		}, 0, 60 * 1000);
+		}, 0, 1000);
 	}
 
 	int hour = 0;
@@ -130,13 +130,10 @@ public class Clock {
 
 	private void internalShowTime(int hour, int minute) {
 
-		int shownMinute = ((minute + 2) / 5) * 5;
+		int shownMinute = (minute / 5) * 5;
+		int remainingMinutes = minute % 5;
 		int shownHour = hour;
-		if (shownMinute >= 60) {
-			shownMinute = 0;
-			shownHour++;
-			shownHour = shownHour % 12;
-		} else if (shownMinute > 20) {
+		if (shownMinute > 20) {
 			shownHour++;
 			shownHour = shownHour % 12;
 		}
@@ -147,14 +144,11 @@ public class Clock {
 			sentenceToShow.addWord(keyWordClock);
 		}
 
-		System.out.println("Stunde: " + hour + " Minute: " + minute + " Shown: " + shownHour + ":" + shownMinute);
-		SwingUtilities.invokeLater(new Runnable() {
-
-			@Override
-			public void run() {
-				clock.resetAllChars();
-				showWord(sentenceToShow);
-			}
+		System.out.println("Stunde: " + hour + " Minute: " + minute + " Shown: " + shownHour + ":" + shownMinute + " + " + remainingMinutes);
+		SwingUtilities.invokeLater(() -> {
+			clock.resetAllChars();
+			showWord(sentenceToShow);
+			clock.setMinute(remainingMinutes);
 		});
 	}
 }
