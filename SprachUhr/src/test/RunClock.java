@@ -5,23 +5,23 @@ import javax.swing.JFrame;
 import clock.Clock;
 import clock.ClockComposite;
 
-public class TestSprachUhr {
+public class RunClock {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
-		JFrame testFrame = new JFrame();
+		JFrame mainWindow = new JFrame();
 		ClockComposite clockComposite = new ClockComposite();
 		Clock clock = new Clock(clockComposite);
 
-		testFrame.setSize(800, 600);
-		testFrame.add(clockComposite);
+		mainWindow.setSize(800, 800);
+		mainWindow.add(clockComposite);
 
-		testFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		testFrame.setVisible(true);
+		mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		mainWindow.setVisible(true);
 
 		clock.showCurrentTime();
-		// clock.testTime();
+//		 clock.testTime();
 	}
 
 }

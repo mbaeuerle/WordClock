@@ -23,9 +23,7 @@ public class Sentence implements HasCharPositions {
 		ArrayList<Integer> allCharPositions = new ArrayList<>();
 		for (HasCharPositions hasCharPositions : words) {
 			Integer[] absoluteCharPositions = hasCharPositions.getAbsoluteCharPositions();
-			for (int i : absoluteCharPositions) {
-				allCharPositions.add(i);
-			}
+			allCharPositions.addAll(Arrays.asList(absoluteCharPositions));
 		}
 		return allCharPositions.toArray(new Integer[0]);
 	}
